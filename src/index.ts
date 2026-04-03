@@ -68,7 +68,7 @@ async function run(): Promise<void> {
 
   const totalAdditions = includedFiles.reduce((sum, f) => sum + f.additions, 0);
   const totalDeletions = includedFiles.reduce((sum, f) => sum + f.deletions, 0);
-  const totalChanges = totalAdditions + totalDeletions;
+  const totalChanges = totalAdditions - totalDeletions;
 
   // Set outputs
   core.setOutput("total-additions", totalAdditions);
@@ -111,9 +111,10 @@ function buildComment(
   lines.push(`<!-- ${tag} -->`);
   lines.push(`## Lines Changed`);
   lines.push("");
-  lines.push(`| Additions | Deletions | Total |`);
+  lines.push(`| Additions | Deletions | Delta |`);
   lines.push(`|---:|---:|---:|`);
-  lines.push(`| +${fmt.format(additions)} | -${fmt.format(deletions)} | ${fmt.format(total)} |`);
+  const sign = total >= 0 ? "+" : "";
+  lines.push(`| +${fmt.format(additions)} | -${fmt.format(deletions)} | ${sign}${fmt.format(total)} |`);
   lines.push("");
   lines.push(
     `*${fmt.format(included.length)} file(s) counted, ${fmt.format(excluded.length)} file(s) excluded*`
