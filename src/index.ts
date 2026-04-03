@@ -113,9 +113,10 @@ function buildComment(
   lines.push("");
   lines.push(`| Additions | Deletions | Delta |`);
   lines.push(`|---:|---:|---:|`);
-  const sign = total >= 0 ? "+" : "";
+  const sign = total >= 0 ? "+" : "\u2013";
   const deltaColor = total >= 0 ? "green" : "red";
-  lines.push(`| $\\color{green}{\\textsf{+${fmt.format(additions)}}}$ | $\\color{red}{\\textsf{-${fmt.format(deletions)}}}$ | $\\color{${deltaColor}}{\\textsf{${sign}${fmt.format(total)}}}$ |`);
+  const formattedTotal = fmt.format(Math.abs(total));
+  lines.push(`| $\\color{green}{\\textsf{+${fmt.format(additions)}}}$ | $\\color{red}{\\textsf{\u2013${fmt.format(deletions)}}}$ | $\\color{${deltaColor}}{\\textsf{${sign}${formattedTotal}}}$ |`);
   lines.push("");
   lines.push(
     `*${fmt.format(included.length)} file(s) counted, ${fmt.format(excluded.length)} file(s) excluded*`
