@@ -114,7 +114,8 @@ function buildComment(
   lines.push(`| Additions | Deletions | Delta |`);
   lines.push(`|---:|---:|---:|`);
   const sign = total >= 0 ? "+" : "";
-  lines.push(`| +${fmt.format(additions)} | -${fmt.format(deletions)} | ${sign}${fmt.format(total)} |`);
+  const deltaColor = total >= 0 ? "green" : "red";
+  lines.push(`| $\\color{green}{\\textsf{+${fmt.format(additions)}}}$ | $\\color{red}{\\textsf{-${fmt.format(deletions)}}}$ | $\\color{${deltaColor}}{\\textsf{${sign}${fmt.format(total)}}}$ |`);
   lines.push("");
   lines.push(
     `*${fmt.format(included.length)} file(s) counted, ${fmt.format(excluded.length)} file(s) excluded*`
