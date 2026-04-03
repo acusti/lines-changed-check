@@ -106,18 +106,17 @@ function buildComment(
   excluded: FileStats[],
   patterns: string[]
 ): string {
+  const fmt = new Intl.NumberFormat("en-US");
   const lines: string[] = [];
   lines.push(`<!-- ${tag} -->`);
   lines.push(`## Lines Changed`);
   lines.push("");
-  lines.push(`| | Lines |`);
-  lines.push(`|---|---:|`);
-  lines.push(`| **Additions** | +${additions} |`);
-  lines.push(`| **Deletions** | -${deletions} |`);
-  lines.push(`| **Total** | ${total} |`);
+  lines.push(`| Additions | Deletions | Total |`);
+  lines.push(`|---:|---:|---:|`);
+  lines.push(`| +${fmt.format(additions)} | -${fmt.format(deletions)} | ${fmt.format(total)} |`);
   lines.push("");
   lines.push(
-    `*${included.length} file(s) counted, ${excluded.length} file(s) excluded*`
+    `*${fmt.format(included.length)} file(s) counted, ${fmt.format(excluded.length)} file(s) excluded*`
   );
 
   if (patterns.length > 0) {
