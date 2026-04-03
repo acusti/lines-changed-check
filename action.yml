@@ -1,0 +1,41 @@
+name: "Lines Changed Check"
+description: "Calculate lines changed in a PR, excluding files matching configurable glob patterns"
+author: "andrew"
+
+inputs:
+  github-token:
+    description: "GitHub token for API access"
+    required: true
+    default: "${{ github.token }}"
+  exclude-patterns:
+    description: "Newline-separated glob patterns for files to exclude from the count"
+    required: false
+    default: ""
+  post-comment:
+    description: "Whether to post/update a PR comment with the results"
+    required: false
+    default: "true"
+  comment-tag:
+    description: "Hidden HTML tag used to identify the comment for updates"
+    required: false
+    default: "lines-changed-check"
+
+outputs:
+  total-additions:
+    description: "Total lines added (excluding matched files)"
+  total-deletions:
+    description: "Total lines deleted (excluding matched files)"
+  total-changes:
+    description: "Total lines changed (additions + deletions, excluding matched files)"
+  included-file-count:
+    description: "Number of files included in the count"
+  excluded-file-count:
+    description: "Number of files excluded from the count"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "bar-chart-2"
+  color: "blue"
